@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Maturle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=IM+Fell+English:ital@0;1&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0e0d0b;
+  --bg2: #151410;
+  --bg3: #1c1a16;
+  --line: rgba(255,255,255,0.08);
+  --line2: rgba(255,255,255,0.14);
+  --ink: #e8e3d8;
+  --ink2: #a09880;
+  --ink3: #5a5446;
+  --gold: #c8a84b;
+  --gold2: #9e7e2e;
+  --green: #3a6b44;
+  --green-bright: #5a9e6a;
+  --amber: #8a6020;
+  --amber-bright: #c8902e;
+  --charcoal: #2a2820;
+  --charcoal-bright: #4a4840;
+  --img-filter: invert(1) brightness(.85);
+  --img-filter2: invert(1) brightness(.75);
+  --btn-hover-bg: rgba(255,255,255,0.04);
+  --font-head: 'Times New Roman', serif;
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Crimson Text', serif;
+  --font-fell: 'IM Fell English', serif;
+}
+:root.light {
+  --bg: #f5f0e8;
+  --bg2: #faf7f2;
+  --bg3: #eee9de;
+  --line: rgba(0,0,0,0.08);
+  --line2: rgba(0,0,0,0.15);
+  --ink: #1a1714;
+  --ink2: #5a5040;
+  --ink3: #9a8e78;
+  --gold: #7a5c1e;
+  --gold2: #5a3e0a;
+  --green: #cce5d2;
+  --green-bright: #3a7a44;
+  --amber: #f5e0b0;
+  --amber-bright: #a87020;
+  --charcoal: #d8d0c0;
+  --charcoal-bright: #a09880;
+  --img-filter: none;
+  --img-filter2: none;
+  --btn-hover-bg: rgba(0,0,0,0.04);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.7; }
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(255,255,255,0.015) 28px, rgba(255,255,255,0.015) 29px);
+  padding: 0 0 5rem;
+}
+
+.masthead {
+  text-align: center;
+  padding: 2.5rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--line2);
+  position: relative;
+}
+
+.masthead::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--line);
+  margin-top: 6px;
+}
+
+.masthead-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.masthead-rule::before, .masthead-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line2);
+}
+
+.masthead-rule span {
+  font-family: var(--font-fell);
+  font-size: 11px;
+  letter-spacing: .25em;
+  color: var(--ink3);
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-head);
+  font-size: clamp(2.8rem, 10vw, 4.2rem);
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: .01em;
+  margin-bottom: .5rem;
+}
+
+.dateline {
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink3);
+  letter-spacing: .06em;
+  margin-bottom: 1rem;
+}
+
+.meta-strip {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-top: .75rem;
+}
+
+.meta-item {
+  flex: 1;
+  max-width: 160px;
+  padding: .5rem .75rem;
+  text-align: center;
+  border-right: 1px solid var(--line);
+  font-family: var(--font-fell);
+  font-size: 12px;
+  color: var(--ink3);
+  letter-spacing: .04em;
+}
+
+.meta-item:last-child { border-right: none; }
+
+.meta-val {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.section-rule {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: 2rem 0 1.25rem;
+}
+
+.section-rule::before, .section-rule::after {
+  content: '';
+  height: 1px;
+  background: var(--line2);
+}
+
+.section-rule span {
+  font-family: var(--font-fell);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: var(--ink3);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.card {
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+  margin-bottom: 1.25rem;
+  transition: opacity .25s;
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card.locked {
+  opacity: .3;
+  pointer-events: none;
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: .6rem 1rem;
+  border-bottom: 1px solid var(--line2);
+  position: relative;
+  z-index: 1;
+}
+
+.card-num {
+  font-family: var(--font-fell);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+}
+
+.card-cat {
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: .04em;
+}
+
+.card-body {
+  padding: 1.25rem 1rem 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.q-text {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+.q-text img {
+  max-width: 100%;
+  height: auto;
+  display: inline;
+  vertical-align: middle;
+  filter: var(--img-filter);
+  margin: 0 1px;
+}
+
+.q-img {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.q-img img {
+  max-width: 100%;
+  border: 1px solid var(--line2);
+  filter: var(--img-filter2);
+}
+
+.card-footer {
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 1;
+  background: var(--bg3);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: 100%;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid var(--line2);
+  color: var(--ink2);
+  font-family: var(--font-fell);
+  font-size: 13px;
+  letter-spacing: .07em;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn:hover {
+  background: var(--btn-hover-bg);
+  border-color: var(--line2);
+  color: var(--ink);
+}
+
+.btn:active { opacity: .8; }
+
+.btn-primary {
+  border-color: var(--gold2);
+  color: var(--gold);
+}
+
+.btn-primary:hover {
+  background: rgba(200,168,75,0.06);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-link {
+  border-color: var(--line);
+  color: var(--ink3);
+  font-style: italic;
+}
+
+.btn-link:hover {
+  color: var(--ink2);
+  border-color: var(--line2);
+}
+
+.eval-row {
+  display: flex;
+  gap: 0;
+}
+
+.eval-row .btn {
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 6px;
+  border-right: none;
+  font-size: 20px;
+}
+
+.eval-row .btn:last-child { border-right: 1px solid var(--line2); }
+
+.eval-row .btn-lbl {
+  font-family: var(--font-fell);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--ink3);
+  display: block;
+}
+
+.eval-hint {
+  text-align: center;
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink3);
+  letter-spacing: .05em;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink3);
+  letter-spacing: .04em;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  flex-shrink: 0;
+}
+
+.status-dot.lock { background: var(--ink3); }
+
+.grid-section {
+  border: 1px solid var(--line2);
+  background: var(--bg2);
+  margin-bottom: 1.25rem;
+  display: none;
+  position: relative;
+}
+
+.grid-section::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+
+.grid-section.show { display: block; }
+
+.grid-inner { padding: 1rem; position: relative; z-index: 1; }
+
+.grid-title {
+  font-family: var(--font-fell);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: .75rem;
+  text-align: center;
+}
+
+.grid-rows { display: flex; flex-direction: column; gap: 6px; margin-bottom: .75rem; }
+
+.grid-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.g-lbl {
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink3);
+  min-width: 100px;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.g-cell {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 1px solid var(--line2);
+  background: var(--bg3);
+}
+
+.g-cell.yes  { background: var(--green);   border-color: var(--green-bright); }
+.g-cell.almost { background: var(--amber); border-color: var(--amber-bright); }
+.g-cell.no   { background: var(--charcoal); border-color: var(--charcoal-bright); }
+
+.grid-divider { height: 1px; background: var(--line); margin: .75rem 0; }
+
+.streak-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.streak-lbl {
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink3);
+  letter-spacing: .04em;
+}
+
+.streak-n {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--ink);
+}
+
+.streak-unit {
+  font-family: var(--font-fell);
+  font-size: 12px;
+  color: var(--ink3);
+  margin-left: 4px;
+}
+
+.fin {
+  text-align: center;
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink3);
+  line-height: 1.8;
+  padding: .5rem 0 1rem;
+  display: none;
+}
+
+.fin::before {
+  content: '— ';
+}
+.fin::after {
+  content: ' —';
+}
+
+.err {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  font-family: var(--font-fell);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink3);
+  line-height: 1.9;
+  border: 1px solid var(--line);
+}
+
+.err strong {
+  display: block;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 16px;
+  color: var(--ink2);
+  margin-bottom: .5rem;
+}
+
+@media (max-width: 480px) {
+  .title { font-size: 2.6rem; }
+  .card::before, .grid-section::before { display: none; }
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: transparent;
+  border: 1px solid var(--line2);
+  color: var(--ink3);
+  font-family: var(--font-fell);
+  font-size: 11px;
+  letter-spacing: .12em;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+  text-transform: uppercase;
+}
+
+.theme-toggle:hover {
+  color: var(--ink2);
+  border-color: var(--line2);
+  background: var(--btn-hover-bg);
+}
+
+html, body { transition: background .3s, color .2s; }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">☀ Light</button>
+  <div class="masthead-rule"><span>Est. Anno Domini 2026</span></div>
+  <div class="title">Maturle</div>
+  <div class="dateline" id="dateline"></div>
+  <div class="meta-strip">
+    <div class="meta-item">
+      <span class="meta-val" id="meta-streak">0</span>
+      streak
+    </div>
+    <div class="meta-item">
+      <span class="meta-val" id="meta-prog">— / —</span>
+      progress
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div id="cards-wrap"></div>
+  <div class="grid-section" id="grid-section">
+    <div class="grid-inner">
+      <div class="grid-title">Result of the day</div>
+      <div class="grid-rows" id="grid-rows"></div>
+      <div class="grid-divider"></div>
+      <div class="streak-row">
+        <span class="streak-lbl">Current streak</span>
+        <span class="streak-n" id="streak-num">0<span class="streak-unit">days</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="fin" id="fin">Wszystko na dziś — wróć jutro po nowe zadania</div>
+</div>
+
+<script>
+var QS = [];
+var EM = {yes:"🟩", almost:"🟨", no:"⬛", pending:"⬜"};
+
+function todayKey() {
+  var d = new Date();
+  return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+}
+
+var today = todayKey();
+var st = {};
+try { st = JSON.parse(localStorage.getItem("dmq5") || "{}"); } catch(e) {}
+
+function initState() {
+  if (st.day !== today) {
+    var prev = st.streak || 0;
+    var wasYesterday = false;
+    if (st.lastDay) {
+      var yy = new Date(new Date() - 86400000);
+      var yk = yy.getFullYear()+"-"+(yy.getMonth()+1)+"-"+yy.getDate();
+      wasYesterday = st.lastDay === yk;
+    }
+    st = { day: today, answers: {}, streak: wasYesterday ? prev : 0, lastDay: st.lastDay||null };
+    save();
+  }
+}
+
+function save() {
+  try { localStorage.setItem("dmq5", JSON.stringify(st)); } catch(e) {}
+}
+
+function countDone() { return Object.keys(st.answers).length; }
+
+function updateHeader() {
+  document.getElementById("meta-streak").textContent = (st.streak||0) + " day" + ((st.streak!==1)?"s":"");
+  document.getElementById("meta-prog").textContent = QS.length ? countDone() + " / " + QS.length : "— / —";
+}
+
+function renderDate() {
+  var d = new Date();
+  document.getElementById("dateline").textContent = d.toLocaleDateString("pl-PL", {weekday:"long", day:"numeric", month:"long", year:"numeric"});
+}
+
+function buildCard(q, idx) {
+  var ans = st.answers[q.id];
+  var prevOk = idx === 0 || !!st.answers[QS[idx-1].id];
+  var locked = !prevOk;
+
+  var card = document.createElement("div");
+  card.className = "card" + (locked?" locked":"");
+
+  var hdr = document.createElement("div");
+  hdr.className = "card-header";
+  hdr.innerHTML = '<span class="card-num">Zadanie ' + (idx+1) + '</span><span class="card-cat">' + q.category + '</span>';
+  card.appendChild(hdr);
+
+  var body = document.createElement("div");
+  body.className = "card-body";
+
+  var qt = document.createElement("div");
+  qt.className = "q-text";
+  qt.innerHTML = q.question;
+  body.appendChild(qt);
+
+  if (q.is_img && q.img_link) {
+    var qi = document.createElement("div");
+    qi.className = "q-img";
+    qi.innerHTML = '<img src="' + q.img_link + '" alt="ilustracja" loading="lazy"/>';
+    body.appendChild(qi);
+  }
+
+  card.appendChild(body);
+
+  var foot = document.createElement("div");
+  foot.className = "card-footer";
+
+  if (locked) {
+    foot.innerHTML = '<div class="status-row"><span class="status-dot lock"></span>Ukończ poprzednie zadanie</div>';
+    card.appendChild(foot);
+    return card;
+  }
+
+  if (ans) {
+    var statusRow = document.createElement("div");
+    statusRow.className = "status-row";
+    statusRow.innerHTML = '<span class="status-dot"></span>Oceniono ' + EM[ans];
+    foot.appendChild(statusRow);
+
+    var lnk = document.createElement("a");
+    lnk.className = "btn btn-link";
+    lnk.href = q.answer_link;
+    lnk.target = "_blank";
+    lnk.rel = "noopener noreferrer";
+    lnk.textContent = "Zobacz rozwiązanie ↗";
+    foot.appendChild(lnk);
+    card.appendChild(foot);
+    return card;
+  }
+
+  var readyBtn = document.createElement("button");
+  readyBtn.className = "btn btn-primary";
+  readyBtn.textContent = "Jestem gotowy / gotowa";
+  foot.appendChild(readyBtn);
+  card.appendChild(foot);
+
+  var revealed = false;
+  readyBtn.addEventListener("click", function() {
+    if (revealed) return;
+    revealed = true;
+    foot.innerHTML = "";
+
+    var hint = document.createElement("div");
+    hint.className = "eval-hint";
+    hint.textContent = "Jak ci poszło?";
+    foot.appendChild(hint);
+
+    var row = document.createElement("div");
+    row.className = "eval-row";
+
+    [["🟩","yes","Tak"],["🟨","almost","Prawie"],["⬛","no","Nie"]].forEach(function(item) {
+      var b = document.createElement("button");
+      b.className = "btn";
+      b.innerHTML = item[0] + '<span class="btn-lbl">' + item[2] + '</span>';
+      b.addEventListener("click", function() {
+        st.answers[q.id] = item[1];
+        if (countDone() === QS.length) {
+          st.streak = (st.streak||0) + 1;
+          st.lastDay = today;
+        }
+        save();
+        render();
+      });
+      row.appendChild(b);
+    });
+    foot.appendChild(row);
+
+    var lnk2 = document.createElement("a");
+    lnk2.className = "btn btn-link";
+    lnk2.href = q.answer_link;
+    lnk2.target = "_blank";
+    lnk2.rel = "noopener noreferrer";
+    lnk2.textContent = "Zobacz rozwiązanie ↗";
+    foot.appendChild(lnk2);
+  });
+
+  return card;
+}
+
+function renderGrid() {
+  var gs = document.getElementById("grid-section");
+  var gr = document.getElementById("grid-rows");
+  gr.innerHTML = "";
+  if (!QS.length || countDone() === 0) { gs.classList.remove("show"); return; }
+  gs.classList.add("show");
+
+  QS.forEach(function(q, i) {
+    var a = st.answers[q.id];
+    var row = document.createElement("div");
+    row.className = "grid-row";
+    row.innerHTML = '<div class="g-lbl">Z'+(i+1)+' · '+q.category+'</div>'
+      + '<div class="g-cell'+(a?' '+a:'')+'">'+( a ? EM[a] : EM.pending )+'</div>';
+    gr.appendChild(row);
+  });
+
+  document.getElementById("streak-num").innerHTML = (st.streak||0) + '<span class="streak-unit"> days</span>';
+}
+
+function render() {
+  updateHeader();
+  var cw = document.getElementById("cards-wrap");
+  cw.innerHTML = "";
+
+  if (!QS.length) return;
+
+  var sr = document.createElement("div");
+  sr.className = "section-rule";
+  sr.innerHTML = '<span>Zadania na dziś</span>';
+  cw.appendChild(sr);
+
+  QS.forEach(function(q, i) { cw.appendChild(buildCard(q, i)); });
+  renderGrid();
+  document.getElementById("fin").style.display = countDone() === QS.length ? "block" : "none";
+}
+
+function showError(msg) {
+  var cw = document.getElementById("cards-wrap");
+  cw.innerHTML = '<div class="err"><strong>Nie można załadować pytań</strong>' + msg + '</div>';
+}
+
+function pickToday(all) {
+  var d = new Date();
+  var seed = d.getFullYear() * 10000 + (d.getMonth()+1) * 100 + d.getDate();
+  var start = seed % Math.max(1, all.length);
+  var result = [];
+  for (var i = 0; i < 2; i++) {
+    result.push(all[(start + i) % all.length]);
+  }
+  return result;
+}
+
+renderDate();
+initState();
+updateHeader();
+
+var isLight = false;
+try { isLight = localStorage.getItem("dmq-theme") === "light"; } catch(e) {}
+if (isLight) {
+  document.documentElement.classList.add("light");
+  document.getElementById("theme-toggle").textContent = "☽ Dark";
+}
+
+document.getElementById("theme-toggle").addEventListener("click", function() {
+  isLight = !isLight;
+  document.documentElement.classList.toggle("light", isLight);
+  this.textContent = isLight ? "☽ Dark" : "☀ Light";
+  try { localStorage.setItem("dmq-theme", isLight ? "light" : "dark"); } catch(e) {}
+});
+
+fetch("questions.json")
+  .then(function(r) {
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    var all = Array.isArray(data) ? data : (data.questions || []);
+    if (!all.length) { showError("Brak pytań w pliku questions.json."); return; }
+    QS = pickToday(all);
+    render();
+  })
+  .catch(function(e) {
+    showError("Upewnij się, że plik <code>questions.json</code> jest w tym samym katalogu co strona i serwer jest uruchomiony.");
+  });
+</script>
+</body>
+</html>
